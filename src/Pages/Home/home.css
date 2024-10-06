@@ -1,11 +1,27 @@
-.home {
+/* Resetting default margin and padding */
+html, body {
     margin: 0;
     padding: 0;
+    height: 100%; /* Make sure the body takes full height */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+.home {
+    display: flex; /* Use flexbox to center content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Ensure the home takes the full viewport height */
+    width: 100vw; /* Ensure the home takes the full viewport width */
     overflow: hidden; /* Prevents any overflow from the canvas */
-  }
-  
-  canvas {
-    width: 100%;
-    height: 100%;
-  }
-  
+    background-image: url(/sky.jpeg);
+    background-size: cover; /* Ensures the image covers the entire area */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat;
+}
+
+canvas {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+}
