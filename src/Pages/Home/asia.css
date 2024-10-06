@@ -1,0 +1,65 @@
+/* Container for the horizontal scrolling */
+.scroll-container {
+  overflow-x: auto; /* Allows horizontal scrolling */
+  white-space: nowrap; /* Prevents content from wrapping */
+  width: 3000px; /* Adjust this width according to your content */
+  height: 100vh; /* Full viewport height */
+  background-repeat: repeat-x; /* Repeat the background horizontally */
+  background-size: cover; /* Stretch the background to fit the container height */
+}
+
+/* Styling the images within the container */
+.scroll-container img {
+  display: inline-block;
+  width: 1000px; /* Set width for each image */
+  height: auto; /* Maintain aspect ratio */
+  
+}
+
+.weather-icons {
+  position: fixed; /* Keep the icons fixed in place */
+  bottom: 20px; /* Align to the bottom of the screen */
+  left: 20px;   /* Align to the left of the screen */
+  z-index: 100;
+}
+
+.weather-icons i {
+  font-size: 40px; /* Size of the icons */
+  color: #b2232d; /* Change icon color */
+  margin-right: 20px; /* Space between icons */
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column; /* Stack the text label under the icon */
+}
+
+.icon-container i {
+  font-size: 40px; /* Size of the icons */
+  color: #007BFF; /* Change icon color */
+  margin-bottom: 5px; /* Space between the icon and the text */
+}
+
+.icon-container span {
+  font-size: 14px; /* Text label size */
+  color: #5e6a6e; /* Text color */
+}
+
+/* Fixed icon that stays static on the screen */
+.fixed-icon {
+  position: fixed; /* Keeps it static as the user scrolls */
+  top: 10px; /* Adjust position from the top */
+  left: 10px; /* Adjust position from the left */
+  margin-top: 200px;
+  z-index: 1000; /* Ensures the icon is on top of other content */
+  bottom: 0; /* Align to the bottom */
+  left: 50%; /* Move it horizontally to the center */
+  transform: translateX(-50%); 
+}
+
+.fixed-icon img {
+  width: 700px; /* Size of the icon */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 1000; /* Keeps it visible above background */
+}
