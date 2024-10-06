@@ -1,21 +1,33 @@
 /* Container for the horizontal scrolling */
 .scroll-container {
-  overflow-x: auto; /* Allows horizontal scrolling */
-  white-space: nowrap; /* Prevents content from wrapping */
-  width: 3000px; /* Adjust this width according to your content */
+  overflow-x: scroll; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Disable vertical scrolling */
+  display: flex; /* Flexbox to align content horizontally */
+  width: 3000px; /* Set the width of the container to be larger than the screen */
   height: 100vh; /* Full viewport height */
-  background-repeat: repeat-x; /* Repeat the background horizontally */
-  background-size: cover; /* Stretch the background to fit the container height */
 }
 
-/* Styling the images within the container */
-.scroll-container img {
-  display: inline-block;
-  width: 1000px; /* Set width for each image */
-  height: auto; /* Maintain aspect ratio */
-  
+/* Background Image */
+.background {
+  position: absolute; /* Keep it fixed in the background */
+  top: 0;
+  left: 0;
+  width: 5000px; /* Set a width larger than the screen for scrolling effect */
+  height: 100vh; /* Full viewport height */
+  background-image: url('/bg.jpg'); /* Set the background image */
+  z-index: 0; /* Ensure it's behind other content */
 }
 
+/* Styling the content blocks inside the scroll container */
+.content-block {
+  width: 100vw; /* Each block takes up full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-size: auto; /* Maintain the natural size of the background */
+  background-repeat: no-repeat; /* Prevent repeating background */
+  display: inline-block; /* To keep the blocks side by side */
+}
+
+/* Weather Icons */
 .weather-icons {
   position: fixed; /* Keep the icons fixed in place */
   bottom: 20px; /* Align to the bottom of the screen */
@@ -53,7 +65,6 @@
   left: 10px; /* Adjust position from the left */
   margin-top: 200px;
   z-index: 1000; /* Ensures the icon is on top of other content */
-  bottom: 0; /* Align to the bottom */
   left: 50%; /* Move it horizontally to the center */
   transform: translateX(-50%); 
 }

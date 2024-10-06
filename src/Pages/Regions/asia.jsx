@@ -6,23 +6,27 @@ import tajIcon from '/taj.png';
 function Asia() {
   return (
     <div className="App">
-      <div className="scroll-container" style={{ backgroundImage: `url(${bgImage})` }}>
+      {/* Background Image */}
+      <div className="background"></div>
+
+      <div className="scroll-container">
+        <div className="content-block" style={{ backgroundImage: `url(${bgImage})` }}>
+       </div>
+       
       </div>
 
       <div className="fixed-icon">
-        <img src={tajIcon} alt="Icon" />
+        <img src={tajIcon} alt="Taj Mahal Icon" />
       </div>
 
       <div className="weather-icons">
         {/* Thermometer Icon */}
         <div className="icon-container">
-          <i className="fas fa-thermometer-half"></i>
           <span>Temperature</span>
         </div>
 
         {/* Humidity Icon */}
         <div className="icon-container">
-          <i className="fas fa-tint"></i>
           <span>Humidity</span>
         </div>
       </div>
