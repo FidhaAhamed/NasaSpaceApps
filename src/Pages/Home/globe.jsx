@@ -1,10 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { OrbitControls, useGLTF, Text } from '@react-three/drei';
+import { useNavigate } from 'react-router-dom';
 
-// Marker component
 const Marker = ({ position, label, onClick }) => (
   <>
-    <mesh position={position} onClick={onClick}>
+    <mesh
+      position={position}
+      onClick={onClick}
+      onPointerOver={(e) => (document.body.style.cursor = 'pointer')} // Change cursor to pointer
+      onPointerOut={(e) => (document.body.style.cursor = 'default')} // Reset cursor to default
+    >
       <sphereGeometry args={[0.2, 40, 40]} />
       <meshStandardMaterial color="red" />
     </mesh>
@@ -22,81 +27,96 @@ const Marker = ({ position, label, onClick }) => (
   </>
 );
 
-// Convert latitude/longitude to 3D sphere coordinates, with optional offset for labels
 const toSphereCoords = (lat, lon, radius, offset = 0) => {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
-  
-  // Increase radius by offset to lift labels above surface
   const adjustedRadius = radius + offset;
-
   const x = -(adjustedRadius * Math.sin(phi) * Math.cos(theta));
   const z = adjustedRadius * Math.sin(phi) * Math.sin(theta);
   const y = adjustedRadius * Math.cos(phi);
-
   return [x, y, z];
 };
 
-const Globe = ({ onClickRegion }) => {
+const Globe = () => {
   const globeRef = useRef();
-  const { scene, error, isLoading } = useGLTF('/globe.gltf');  // Load the 3D model
+  const { scene, error, isLoading } = useGLTF('/globe.gltf');
+  const navigate = useNavigate();
+  const [rotationEnabled, setRotationEnabled] = useState(true); // Track rotation state
 
-  if (isLoading) return <div>Loading...</div>;  // Handle loading state
-
+  if (isLoading) return <div>Loading...</div>;
   if (error) {
     console.error('Error loading GLTF model:', error.message);
     return <div>Error loading model. Check console for details.</div>;
   }
 
+  const handleRegionClick = (region) => {
+    console.log(`Clicked on ${region}`);
+    if (region === 'Asia') {
+      navigate('/asia'); // Navigate to the Asia page
+    }
+    // Add more conditions for other regions
+  };
+
   return (
     <>
-      {/* Increase light intensity */}
       <ambientLight intensity={1.5} />
       <directionalLight position={[5, 5, 5]} intensity={2} />
       <pointLight position={[10, 10, 10]} intensity={1} />
-
-      {/* Add the 3D globe model to the scene */}
       <primitive object={scene} scale={[5, 5, 5]} ref={globeRef} position={[0, 0, 0]} />
 
-      {/* Markers with labels for different regions */}
+      {/* Markers */}
       <Marker
         position={toSphereCoords(9.082, 8.6753, 5.4)}
         label="Africa"
-        onClick={() => onClickRegion('Africa')}
+        onClick={() => handleRegionClick('Africa')}
+        onPointerDown={() => setRotationEnabled(false)} // Disable rotation on pointer down
+        onPointerUp={() => setRotationEnabled(true)} // Enable rotation on pointer up
       />
       <Marker
         position={toSphereCoords(39.9042, 116.4074, 5.4)}
         label="Asia"
-        onClick={() => onClickRegion('Asia')}
+        onClick={() => handleRegionClick('Asia')}
+        onPointerDown={() => setRotationEnabled(false)}
+        onPointerUp={() => setRotationEnabled(true)}
       />
       <Marker
         position={toSphereCoords(48.8566, 2.3522, 5.4)}
         label="Europe"
-        onClick={() => onClickRegion('Europe')}
+        onClick={() => handleRegionClick('Europe')}
+        onPointerDown={() => setRotationEnabled(false)}
+        onPointerUp={() => setRotationEnabled(true)}
       />
       <Marker
         position={toSphereCoords(40.7128, -74.0060, 5.4)}
         label="North America"
-        onClick={() => onClickRegion('North America')}
+        onClick={() => handleRegionClick('North America')}
+        onPointerDown={() => setRotationEnabled(false)}
+        onPointerUp={() => setRotationEnabled(true)}
       />
       <Marker
         position={toSphereCoords(-22.9068, -43.1729, 5.4)}
         label="South America"
-        onClick={() => onClickRegion('South America')}
+        onClick={() => handleRegionClick('South America')}
+        onPointerDown={() => setRotationEnabled(false)}
+        onPointerUp={() => setRotationEnabled(true)}
       />
       <Marker
         position={toSphereCoords(-33.8688, 151.2093, 5.4)}
         label="Australia"
-        onClick={() => onClickRegion('Australia')}
+        onClick={() => handleRegionClick('Australia')}
+        onPointerDown={() => setRotationEnabled(false)}
+        onPointerUp={() => setRotationEnabled(true)}
       />
       <Marker
         position={toSphereCoords(-75.250973, -0.071389, 5.4)}
         label="Antarctica"
-        onClick={() => onClickRegion('Antarctica')}
+        onClick={() => handleRegionClick('Antarctica')}
+        onPointerDown={() => setRotationEnabled(false)}
+        onPointerUp={() => setRotationEnabled(true)}
       />
 
-      {/* Add controls for rotating the globe */}
-      <OrbitControls autoRotate autoRotateSpeed={2} target={[0, 0, 0]} />
+      {/* OrbitControls */}
+      <OrbitControls autoRotate={rotationEnabled} autoRotateSpeed={2} enableRotate={rotationEnabled} target={[0, 0, 0]} />
     </>
   );
 };
